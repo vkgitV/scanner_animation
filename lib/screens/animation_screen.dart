@@ -60,19 +60,18 @@ class _AnimationScreenState extends State<AnimationScreen>
           alignment: Alignment.center,
           clipBehavior: Clip.none,
           children: [
-            SizedBox(
-              child: Image.asset(
+               Image.asset(
                 'assets/images/adharr.jpg',
                 fit: BoxFit.contain,
               ),
-            ),
+
               AnimatedBuilder(
                 animation: _controller,
                 builder: (context, child) {
                   return Positioned(
                     top: _upDownAnimation.value,
                     child: Container(
-                      width: imageWidth + 20 ,
+                      width: imageWidth + 20,
                       height: imageHeight ,
                       decoration: BoxDecoration(
                         color: Colors.orangeAccent.withOpacity(0.3),
