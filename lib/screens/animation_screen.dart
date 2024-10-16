@@ -72,7 +72,7 @@ class _AnimationScreenState extends State<AnimationScreen>
                     top: _upDownAnimation.value,
                     child: Container(
                       width: imageWidth + 20,
-                      height: imageHeight ,
+                      height: imageHeight,
                       decoration: BoxDecoration(
                         color: Colors.orangeAccent.withOpacity(0.3),
                         border: Border.all(color: Colors.orangeAccent, width: 2),
