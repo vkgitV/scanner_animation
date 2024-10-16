@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 
 class AnimationScreen extends StatefulWidget {
@@ -13,9 +11,9 @@ class _AnimationScreenState extends State<AnimationScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _upDownAnimation;
-  late Animation<double> _fadeAnimation;
 
-
+  late double imageWidth ;
+  late double imageHeight  ;
 
   @override
   void initState() {
@@ -26,15 +24,21 @@ class _AnimationScreenState extends State<AnimationScreen>
       vsync: this,
     )..repeat(reverse: true);
 
-    _upDownAnimation = Tween<double>(begin: 0, end: 100).animate(_controller);
+    _upDownAnimation = Tween<double>(begin: -50, end: 50).animate(_controller);
 
-    // _fadeAnimation = Tween<double>(begin: 0, end: 1).animate(
-    //   CurvedAnimation(
-    //     parent: _controller,curve: Curves.fastEaseInToSlowEaseOut
-    //
-    //   ),
-    // );
+    _getImageSize();
+  }
 
+  void _getImageSize() {
+    Image image = Image.asset('assets/images/adharr.jpg');
+    image.image.resolve(const ImageConfiguration()).addListener(
+      ImageStreamListener((ImageInfo info, bool _) {
+        setState(() {
+          imageWidth = info.image.width.toDouble();
+          imageHeight = info.image.height.toDouble();
+        });
+      }),
+    );
   }
 
   @override
@@ -57,33 +61,28 @@ class _AnimationScreenState extends State<AnimationScreen>
           clipBehavior: Clip.none,
           children: [
             SizedBox(
-              width: 200,
-              height: 200,
               child: Image.asset(
-                'assets/images/adharr.webp',
+                'assets/images/adharr.jpg',
                 fit: BoxFit.contain,
               ),
             ),
-            AnimatedBuilder(
-              animation: _controller,
-              builder: (context, child) {
-                return Positioned(
-                  top: _upDownAnimation.value,
-                  // child: FadeTransition(
-                  //   opacity: _fadeAnimation,
-                      child: Container(
-                        width: 220,
-                        height: 100,
-                        decoration: BoxDecoration(
-                          color: Colors.orangeAccent.withOpacity(0.3),
-                          border: Border.all(color: Colors.orangeAccent, width: 2),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
+              AnimatedBuilder(
+                animation: _controller,
+                builder: (context, child) {
+                  return Positioned(
+                    top: _upDownAnimation.value,
+                    child: Container(
+                      width: imageWidth + 20 ,
+                      height: imageHeight ,
+                      decoration: BoxDecoration(
+                        color: Colors.orangeAccent.withOpacity(0.3),
+                        border: Border.all(color: Colors.orangeAccent, width: 2),
+                        borderRadius: BorderRadius.circular(8),
                       ),
-                  // ),
-                );
-              },
-            ),
+                    ),
+                  );
+                },
+              ),
           ],
         ),
       ),
